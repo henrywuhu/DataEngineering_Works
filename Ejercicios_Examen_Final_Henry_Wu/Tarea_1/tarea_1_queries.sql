@@ -1,11 +1,9 @@
 
 --query numero 1
-select count(at2.tipo_de_movimiento) as cantidad_vuelos,at2.tipo_de_movimiento from aeropuerto_tabla at2 where at2.fecha  between '2021-12-01' and '2022-01-31'
-group by at2.tipo_de_movimiento
+select count(at2.fecha) as total_vuelos from aeropuerto_tabla at2 where at2.fecha  between '2021-12-01' and '2022-01-31'
 
 --query numero 2
-select count(at2.pasajeros) as total_pasajeros,at2.tipo_de_movimiento from aeropuerto_tabla at2 where at2.aerolinea_nombre = 'AEROLINEAS ARGENTINAS SA' and at2.fecha  between '2021-01-01' and '2022-06-30'
-GROUP by at2.tipo_de_movimiento
+select count(at2.fecha) as total_vuelos_aerolinea_argentina from aeropuerto_tabla at2 where at2.fecha  between '2021-01-01' and '2022-06-30' and at2.aerolinea_nombre = 'AEROLINEAS ARGENTINAS SA'
 
 --query numero 3
 select at2.fecha,at2.horautc,at2.aeropuerto as aeropuerto_salida,q1.provincia as ciudad_salida,at2.pasajeros,at2.origen_destino as aeropuerto_arribo,q2.provincia as ciudad_arribo from aeropuerto_tabla at2 
@@ -25,7 +23,7 @@ select at2.aerolinea_nombre,sum(at2.pasajeros) as numero_pasejeros from aeropuer
 group by at2.aerolinea_nombre order by numero_pasejeros  desc LIMIT 10
 
 --query numero 5
-select at2.aeronave, sum(at2.pasajeros) as numero_pasajeros from aeropuerto_tabla at2 
+select at2.aeronave, count(at2.aeronave) as numero_vuelos from aeropuerto_tabla at2 
 join aeropuerto_detalles_tabla adt on at2.aeropuerto  = adt.aeropuerto
-where at2.fecha between '2021-01-01' and '2022-06-22' and adt.provincia in ('BUENOS AIRES','CIUDAD AUTÓNOMA DE BUENOS AIRES') and at2.tipo_de_movimiento = 'Despegue'
-GROUP BY at2.aeronave order by numero_pasajeros desc LIMIT 10
+where at2.fecha between '2021-01-01' and '2022-06-30' and adt.provincia in ('BUENOS AIRES','CIUDAD AUTÓNOMA DE BUENOS AIRES') and at2.tipo_de_movimiento = 'Despegue'
+GROUP BY at2.aeronave order by numero_vuelos  desc LIMIT 10

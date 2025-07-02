@@ -2,9 +2,8 @@
 
 
 --query 1
-select cra.fueltype,count(cra.fueltype) as total_rent_number from car_rental_analytics cra
+select count(cra.fueltype) as total_rent_number from car_rental_analytics cra
 where cra.fueltype  in ('electric','hybrid') and cra.rate_daily >=4
-group by cra.fueltype
 
 --query 2
 select cra.state_name,count(cra.state_name) as rent_quantity from car_rental_analytics cra
